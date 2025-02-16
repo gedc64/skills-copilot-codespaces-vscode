@@ -1,53 +1,20 @@
 // Create a web server
 
+// 1. Import the express library
 const express = require('express');
+
+// 2. Create an express application
 const app = express();
-const bodyParser = require('body-parser');
-const port = 3000;
 
-app.use(bodyParser.json());
-
-// Array to store comments
-let comments = [];
-
-// Function to create a new comment
-app.post('/comments', (req, res) => {
-  const comment = req.body.comment;
-  comments.push(comment);
-  res.status(201).end();
-});
-
-// Function to get all comments
+// 3. Define a route
 app.get('/comments', (req, res) => {
-  res.send(comments);
+  res.send('This is a list of comments.');
 });
 
-// Function to get a specific comment
-app.get('/comments/:id', (req, res) => {
-  const id = req.params.id;
-  const comment = comments[id];
-  if (comment) {
-    res.send(comment);
-  } else {
-    res.status(404).send('Comment not found');
-  }
+// 4. Start the server
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
 
-// Function to update a comment
-app.put('/comments/:id', (req, res) => {
-  const id = req.params.id;
-  const newComment = req.body.comment;
-  comments[id] = newComment;
-  res.status(200).end();
-});
-
-// Function to delete a comment
-app.delete('/comments/:id', (req, res) => {
-  const id = req.params.id;
-  comments.splice(id, 1);
-  res.status(204).end();
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// 5. Go to the browser and open http://localhost:3000/comments
+// You will see the message "This is a list of comments."
